@@ -1,75 +1,71 @@
 import React, { useState } from 'react';
 
 const Weather = () => {
-    const [city, setCity] = useState(''); // State to store the city input by the user
-    const [weatherData, setWeatherData] = useState(null); // State to store the fetched weather data
-    const [error, setError] = useState(''); // State to store error messages
+    const [city, setCity] = useState('');
+    const [weatherData, setWeatherData] = useState(null);
+    const [error, setError] = useState('');
 
     const getWeather = async () => {
-        if (!city) { // Check if the city is not provided
-            setError('Please enter a city name.'); // Set error message if city is missing
+        if (!city) {
+            setError('Please enter a city name.');
             return;
         }
 
-        const apiKey = 'cb1e6b284aca4eef2a5be11bfb9a7ed7'; // API key for OpenWeatherMap
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`; // Construct API URL with city and API key
+        const apiKey = 'cb1e6b284aca4eef2a5be11bfb9a7ed7';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
         try {
-            const response = await fetch(url); // Make an API request
-            if (!response.ok) { // Check if the response is not okay
-                throw new Error('City not found'); // Throw an error if city is not found
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('City not found');
             }
-            const data = await response.json(); // Parse the response JSON
-            setWeatherData(data); // Update weather data state with the fetched data
-            setError(''); // Clear any previous errors
-        } catch (err) { // Handle errors during API call
-            setError(err.message); // Set error message
-            setWeatherData(null); // Clear weather data if there's an error
+            const data = await response.json();
+            setWeatherData(data);
+            setError('');
+        } catch (err) {
+            setError(err.message);
+            setWeatherData(null);
         }
     };
 
     return (
-        <div
-            className='w-full h-screen gap-10 bg-gradient-to-r from-gray-300 to-blue-600 p-0 m-0 
-        flex flex-col items-center justify-center'>
-            <div className='max-w-[1260px] mx-auto flex flex-col shadow-2xl shadow-white rounded p-9'>
-                <div className='text-center h-[200px]'>
-                    <h1 className='font-bold text-2xl mb-[20px] text-white'> Weather App </h1> {/* App title */}
-                    <div className='flex flex-col gap-8 mb-[20px]'>
+        <div className="w-full min-h-screen gap-10 bg-gradient-to-r from-gray-300 to-blue-600 p-4 flex flex-col items-center justify-center">
+            <div className="sm:max-w-[600px] w-full flex flex-col shadow-2xl shadow-white rounded p-9">
+                <div className="text-center">
+                    <h1 className="font-bold text-2xl sm:text-3xl mb-5 text-white">Weather App</h1>
+                    <div className="flex flex-col gap-4">
                         <input
-                            type="text" // Input type for city name
-                            placeholder='Enter city name' // Placeholder text for input
-                            className='outline-none rounded border-black p-2 w-[320px] shadow-2xl' // Input styling
-                            value={city} // Bind input value to city state
-                            onChange={(e) => setCity(e.target.value)} // Update city state on input change
+                            type="text"
+                            placeholder="Enter city name"
+                            className="outline-none rounded border-black p-2 w-full max-w-[320px] shadow-2xl mx-auto"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
                         />
                         <button
-                            onClick={getWeather} // Trigger getWeather function on click
-                            className='bg-gradient-to-r from-gray-300 to-blue-800 w-[200px] p-1 mx-auto
-                                   rounded shadow-2xl font-bold text-white hover:bg-gradient-to-r hover:from-yellow-500 hover:to-red-800'>
-                            Get Weather {/* Button label */}
+                            onClick={getWeather}
+                            className="bg-gradient-to-r from-gray-300 to-blue-800 w-full max-w-[200px] p-2 rounded shadow-2xl font-bold text-white hover:bg-gradient-to-r hover:from-yellow-500 hover:to-red-800 mx-auto"
+                        >
+                            Get Weather
                         </button>
                     </div>
                 </div>
 
-                {error && <div className='text-red-500 font-bold text-center'>{error}</div>} {/* Display error message if any */}
+                {error && <div className="text-red-500 font-bold text-center mt-4">{error}</div>}
 
                 {weatherData && (
-                    <div
-                        className='flex flex-col text-[16px] text-white bg-gradient-to-r from-orange-500 to-white-500
-                            font-bold p-5 rounded shadow-2xl'>
-                        <p>City: {weatherData.name}</p> {/* Display city name */}
-                        <p>Temperature: {weatherData.main.temp} &#8451;</p> {/* Display temperature in Celsius */}
-                        <p>Weather: {weatherData.weather[0].description}</p> {/* Display weather description */}
-                        <p>Humidity: {weatherData.main.humidity}%</p> {/* Display humidity percentage */}
+                    <div className="mt-5 flex flex-col text-sm sm:text-base text-white bg-gradient-to-r from-orange-500 to-white-500 font-bold p-5 rounded shadow-2xl w-full max-w-[400px] mx-auto">
+                        <p>City: {weatherData.name}</p>
+                        <p>Temperature: {weatherData.main.temp} &#8451;</p>
+                        <p>Weather: {weatherData.weather[0].description}</p>
+                        <p>Humidity: {weatherData.main.humidity}%</p>
                     </div>
                 )}
 
-                {!weatherData && !error && <div className='text-white'>No Data</div>} {/* Display "No Data" if no weather data or error */}
+                {!weatherData && !error && <div className="text-white text-center mt-4">No Data</div>}
             </div>
 
-            <footer className='mt-[40px]'>
-                <p className='text-white text-[14px]'>Copyright Weather App 2025</p> {/* Footer copyright text */}
+            <footer className="mt-10">
+                <p className="text-white text-sm sm:text-base">Copyright Weather App 2025</p>
             </footer>
         </div>
     );
