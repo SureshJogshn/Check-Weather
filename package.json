@@ -2,7 +2,7 @@
   "name": "weather-check",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://SureshJogshn.github.io/Weather-App",
+  "homepage": "https://678782d32182a2ed6f1eb083--bucolic-faun-a464bc.netlify.app",
   "dependencies": {
     "cra-template": "1.2.0",
     "react": "^19.0.0",
